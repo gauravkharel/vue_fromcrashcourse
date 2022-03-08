@@ -13,14 +13,6 @@
                 width: 200px;
             }
 
-            .two{
-                background-color: antiquewhite;
-            }
-
-            .three{
-                background-color: bisque;
-            }
-
             [v-cloak] {
                 display: none;
             }
@@ -29,13 +21,12 @@
 
     <body>
         <div id="app" v-cloak>{{ message }}
-            <input v-model="message" />
+            <input @keyup.enter="greet(message)" v-model="message" />
 
             <hr />
 
-            <div v-show="isVisible" class="box"></div> 
-            <div v-else-if="isVisible2" class="box two"></div> 
-            <div v-else class="box three"></div> 
+            <button @click="toggleBox">Toggle Box</button>
+            <div v-if="isVisible" class="box"></div>
 
         </div>
     </body>
@@ -46,9 +37,15 @@
             data() {
                 return {
                     message: 'Hello Vue!',
-                    isVisible: false,
-                    isVisible2: false
-
+                    isVisible: false
+                }
+            },
+            methods: {
+                toggleBox() {
+                    this.isVisible = !this.isVisible  
+                },
+                greet(message) {
+                    console.log(message)
                 }
             }
         }).mount('#app')
@@ -56,3 +53,8 @@
 </html>
 
 <!-- without build tools -->
+
+<!-- basics of events and methods in Vue Js: 
+    where the events like button clicked is performed 
+    and, two of the methods, toggleBox() and greet() are called. 
+-->
