@@ -16,12 +16,17 @@
             [v-cloak] {
                 display: none;
             }
+
+            input{
+                margin: 10px;
+                display: block;
+            }
         </style>
     </head>
 
     <body>
-        <div id="app" v-cloak>{{ message }}
-            <input @keyup.enter="greet(message)" v-model="message" />
+        <div id="app" v-cloak>
+            <login-form />
 
             <hr />
 
@@ -48,13 +53,36 @@
                     console.log(message)
                 }
             }
+        }).component('login-form', {
+            template:  `
+                <form @submit.prevent="handleSubmit">
+                    // @submit.prevent : shorthand e.preventDefault() function for methodes
+                    <h1>{{title}}</h1>
+                    <input type="email" v-model="email" />
+                    <input type="password" v-model="password" />
+                    <button> Log In </button> 
+                </form>
+            `,
+            data() {
+                return {
+                    title: 'Login Form',
+                    email: '',
+                    password: ''
+                }
+            },
+            methods: {
+                handleSubmit(){
+                    
+                    console.log('submitted')
+                }
+            }
         }).mount('#app')
     </script>
 </html>
 
 <!-- without build tools -->
 
-<!-- basics of events and methods in Vue Js: 
-    where the events like button clicked is performed 
-    and, two of the methods, toggleBox() and greet() are called. 
+<!-- basics of components: 
+    where we created a basic component form with a submit feature
+    Takeaways: v-if, the template used form components and, method used individually for components
 -->
