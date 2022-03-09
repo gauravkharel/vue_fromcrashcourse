@@ -26,12 +26,13 @@
 
     <body>
         <div id="app" v-cloak>
-            <login-form />
 
             <hr />
-
             <button @click="toggleBox">Toggle Box</button>
+            
+            <login-form />
             <div v-if="isVisible" class="box"></div>
+
 
         </div>
     </body>
@@ -41,90 +42,43 @@
         Vue.createApp({
             data() {
                 return {
-                    message: 'Hello Vue!',
                     isVisible: false
                 }
             },
             methods: {
                 toggleBox() {
                     this.isVisible = !this.isVisible  
-                },
-                greet(message) {
-                    console.log(message)
                 }
+            },
+            updated() {
+                console.log('updated')
             }
         }).component('login-form', {
             template:  `
-                <form @submit.prevent="handleSubmit">
-
-                    <custom-input 
-                        v-for="(input, i) in inputs"
-                        :key =i
-                        v-model="input.value" 
-                        :label="input.label" 
-                        :type="input.type"
-                    />
-                    <button> Log In </button> 
-                </form>
+               <div class="box"></div>
             `,
-            components: ['custom-input'],
-            data() {
-                return {
-                    title: 'Login Form',
-                    inputs: [
-                        {
-                            label: 'Email',
-                            value: '',
-                            type: 'email'
-                        },
-                        {
-                            label: 'Password',
-                            value: '',
-                            type: 'password'
-                        },
-                    ]
-                }
+            created() {
+                console.log('created')
             },
-            methods: {
-                handleSubmit(){
-                    console.log(this.inputs[0].value, this.inputs[1].value)
-                }
+            mounted() {
+                console.log('mounted')
+            },
+            unmounted() {
+                console.log('unmounted')
             }
-        }).component('custom-input', {
-            template: `
-                <label>
-                    {{ label }}
-                    <input :type="text" v-model="inputValue">
-                </label>
-            `,
-            // v-model gives the props named modelValue which maps automatically  
-            //props are read-only    
-            props: ['label', 'modelValue', 'type'],
-            computed: {
-                inputValue: {
-                    get() {
-                        return this.modelValue
-                    },
-                    set(value) {
-                         this.$emit('update:modelValue', value)
-                    }
-                }
-            }
-            // data() {
-            //     return{
-            //         inputValue: ''
-            //     }
-            // }
         }).mount('#app')
     </script>
 </html>
 
 <!-- without build tools -->
 
-<!-- basics of for loops: 
-    the use of v-for
+<!-- basics of for lifecycle hooks: 
+    - check if user is authorized
+    - API Calls
+    - creating or removing events 
+    - getting or cleaning up data
 -->
 
 <!-- for next:
-        lifecycle hooks
+        Next Application Build
 -->
